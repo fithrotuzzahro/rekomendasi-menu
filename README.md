@@ -4,19 +4,19 @@ Proyek ini merupakan implementasi sistem rekomendasi resep berbasis logika seder
 Data yang digunakan merupakan kumpulan resep fiktif dari berbagai kategori seperti nasi, ayam, ikan, sayuran, dan sapi, yang dikelompokkan dalam tiga tingkat kesulitan: mudah, sedang, dan sulit.
 
 🛠️ Cara Menjalankan Kode
-A. Buka software C++ seperti Code::Blocks, Visual Studio, atau compiler online (misalnya replit.com).
-B. Buat file baru dan salin seluruh isi dari file ai indonesia.cpp.
-C. Kompilasi dan jalankan program.
-D. Ikuti menu yang muncul di terminal:
-    1. Masukkan tingkat kesulitan (mudah/sedang/sulit)
-    2. Masukkan bahan utama (ayam/sapi/ikan/sayuran/nasi)
-E. Sistem akan menampilkan rekomendasi resep masakan Indonesia yang sesuai.
+1. Buka software C++ seperti Code::Blocks, Visual Studio, atau compiler online (misalnya replit.com).
+2. Buat file baru dan salin seluruh isi dari file ai indonesia.cpp.
+3. Kompilasi dan jalankan program.
+4. Ikuti menu yang muncul di terminal:
+	A. Masukkan tingkat kesulitan (mudah/sedang/sulit)
+	B. Masukkan bahan utama (ayam/sapi/ikan/sayuran/nasi)
+5. Sistem akan menampilkan rekomendasi resep masakan Indonesia yang sesuai.
 
 ✅ Fitur Utama
-A. Input tingkat kesulitan dan bahan utama dari pengguna.
-B. Rekomendasi resep berdasarkan 2 kriteria utama.
-C. Menampilkan detail resep yang direkomendasikan.
-D. Menu interaktif untuk:
-    1. Menampilkan semua resep berdasarkan tingkat kesulitan
-    2. Menampilkan resep berdasarkan jenis bahan
-    3. Sistem berbasis struktur data dan pencarian sederhana (tanpa AI atau ML)
+1. Input tingkat kesulitan dan bahan utama dari pengguna.
+2. Rekomendasi resep berdasarkan 2 kriteria utama.
+3. Menampilkan detail resep yang direkomendasikan.
+4. Menu interaktif untuk:
+	A. Menampilkan semua resep berdasarkan tingkat kesulitan
+	B. Menampilkan resep berdasarkan jenis bahan
+5. Sistem berbasis struktur data dan pencarian sederhana (tanpa AI atau ML)
