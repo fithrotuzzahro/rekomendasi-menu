@@ -1,251 +1,122 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
 
 using namespace std;
 
 struct Resep {
     string nama;
     string bahan;
-    string kategori;  // mudah/sedang/sulit
-    double skor_ai;   // skor pembelajaran AI
+    int skor;
 };
 
 class ResepAI {
 private:
-    vector<Resep> daftar_resep;
-    // Pembelajaran AI sederhana
-    double suka_mudah, suka_sedang, suka_sulit;
+    vector<Resep> resep_list;
 
 public:
     ResepAI() {
-        // Resep awal
-        daftar_resep.push_back({"Nasi Goreng", "nasi, telur, kecap", "mudah", 0});
-        daftar_resep.push_back({"Mie Ayam", "mie, ayam, sayur", "mudah", 0});
-        daftar_resep.push_back({"Soto", "ayam, kuah, nasi", "sedang", 0});
-        daftar_resep.push_back({"Rendang", "daging, santan, cabai", "sulit", 0});
-        daftar_resep.push_back({"Gado-gado", "sayur, bumbu kacang", "sedang", 0});
+        // Data awal
+        resep_list.push_back({"Nasi Goreng", "nasi, telur, kecap", 0});
+        resep_list.push_back({"Mie Ayam", "mie, ayam, sayur", 0});
+        resep_list.push_back({"Soto Ayam", "ayam, kuah, nasi", 0});
+    }
 
-        // AI mulai netral
-        suka_mudah = suka_sedang = suka_sulit = 0;
+    void tampilkanResep() {
+        cout << "\n--- DAFTAR RESEP ---\n";
+        for (int i = 0; i < resep_list.size(); i++) {
+            cout << i+1 << ". " << resep_list[i].nama << endl;
+            cout << "   Bahan: " << resep_list[i].bahan << endl;
+            cout << "   Skor: " << resep_list[i].skor << endl << endl;
+        }
     }
 
     void tambahResep() {
-        string nama, bahan, kategori;
-        int pilihan;
+        string nama, bahan;
 
-        cout << "\nMasukkan nama resep: ";
+        cout << "Nama resep: ";
         cin.ignore();
         getline(cin, nama);
 
-        cout << "Masukkan bahan-bahan: ";
+        cout << "Bahan-bahan: ";
         getline(cin, bahan);
 
-        cout << "\nPilih tingkat kesulitan:\n";
-        cout << "1. Mudah\n";
-        cout << "2. Sedang\n";
-        cout << "3. Sulit\n";
-        cout << "Pilih (1-3): ";
-        cin >> pilihan;
-
-        switch(pilihan) {
-            case 1: kategori = "mudah"; break;
-            case 2: kategori = "sedang"; break;
-            case 3: kategori = "sulit"; break;
-            default: kategori = "mudah"; break;
-        }
-
-        daftar_resep.push_back({nama, bahan, kategori, 0});
-        cout << "Resep berhasil ditambahkan!\n";
+        resep_list.push_back({nama, bahan, 0});
+        cout << "Resep ditambahkan!\n";
     }
 
-    void lihatResep() {
-        cout << "\n=== DAFTAR RESEP ===\n";
-        for (int i = 0; i < daftar_resep.size(); i++) {
-            cout << i+1 << ". " << daftar_resep[i].nama
-                 << " (" << daftar_resep[i].kategori << ")" << endl;
-            cout << "   Bahan: " << daftar_resep[i].bahan << endl;
-            cout << "   Skor AI: " << daftar_resep[i].skor_ai << endl << endl;
-        }
-    }
+    void beriNilai() {
+        tampilkanResep();
 
-    // === AI LEARNING ===
-    void beriPenilaian() {
-        if (daftar_resep.empty()) {
-            cout << "Belum ada resep!\n";
-            return;
-        }
-
-        lihatResep();
-
-        int nomor;
+        int no;
         char suka;
 
-        cout << "Pilih nomor resep (1-" << daftar_resep.size() << "): ";
-        cin >> nomor;
+        cout << "Pilih nomor resep: ";
+        cin >> no;
 
-        if (nomor < 1 || nomor > daftar_resep.size()) {
-            cout << "Nomor tidak valid!\n";
+        if (no < 1 || no > resep_list.size()) {
+            cout << "Nomor salah!\n";
             return;
         }
 
-        cout << "Apakah Anda suka resep ini? (y/n): ";
+        cout << "Suka resep ini? (y/n): ";
         cin >> suka;
 
-        Resep& resep = daftar_resep[nomor-1];
-
-        if (suka == 'y' || suka == 'Y') {
-            // User suka - tingkatkan skor
-            resep.skor_ai += 1;
-
-            // AI belajar preferensi kategori
-            if (resep.kategori == "mudah") suka_mudah += 1;
-            else if (resep.kategori == "sedang") suka_sedang += 1;
-            else if (resep.kategori == "sulit") suka_sulit += 1;
-
-            cout << "✓ AI Belajar: Anda suka resep " << resep.kategori << endl;
+        if (suka == 'y') {
+            resep_list[no-1].skor++;
+            cout << "AI belajar: Anda suka resep ini!\n";
         } else {
-            // User tidak suka - kurangi skor
-            resep.skor_ai -= 1;
-
-            // AI belajar preferensi kategori
-            if (resep.kategori == "mudah") suka_mudah -= 1;
-            else if (resep.kategori == "sedang") suka_sedang -= 1;
-            else if (resep.kategori == "sulit") suka_sulit -= 1;
-
-            cout << "✓ AI Belajar: Anda kurang suka resep " << resep.kategori << endl;
+            resep_list[no-1].skor--;
+            cout << "AI belajar: Anda kurang suka resep ini!\n";
         }
-
-        cout << " Pembelajaran AI selesai!\n";
     }
 
     void rekomendasiAI() {
-        if (daftar_resep.empty()) {
-            cout << "Belum ada resep!\n";
-            return;
-        }
+        cout << "\n--- REKOMENDASI AI ---\n";
 
-        cout << "\nREKOMENDASI AI:\n";
-        cout << "==================\n";
-
-        // Hitung skor untuk setiap resep
-        vector<pair<double, int>> skor_resep;
-
-        for (int i = 0; i < daftar_resep.size(); i++) {
-            double total_skor = daftar_resep[i].skor_ai;
-
-            // Tambah bonus berdasarkan pembelajaran AI
-            if (daftar_resep[i].kategori == "mudah") {
-                total_skor += suka_mudah;
-            } else if (daftar_resep[i].kategori == "sedang") {
-                total_skor += suka_sedang;
-            } else if (daftar_resep[i].kategori == "sulit") {
-                total_skor += suka_sulit;
-            }
-
-            skor_resep.push_back({total_skor, i});
-        }
-
-        // Urutkan berdasarkan skor tertinggi
-        sort(skor_resep.begin(), skor_resep.end(), greater<pair<double, int>>());
-
-        // Tampilkan top 3 rekomendasi
-        int jumlah = min(3, (int)skor_resep.size());
-        for (int i = 0; i < jumlah; i++) {
-            int idx = skor_resep[i].second;
-            Resep& resep = daftar_resep[idx];
-
-            cout << i+1 << ". " << resep.nama
-                 << " (" << resep.kategori << ")" << endl;
-            cout << "   Skor AI: " << skor_resep[i].first << endl;
-            cout << "   Bahan: " << resep.bahan << endl << endl;
-        }
-
-        if (skor_resep[0].first <= 0) {
-            cout << "Tips: Beri penilaian pada resep untuk rekomendasi yang lebih baik!\n";
-        }
-    }
-
-    void lihatPembelajaranAI() {
-        cout << "\nPEMBELAJARAN AI:\n";
-        cout << "===================\n";
-        cout << "Preferensi Tingkat Kesulitan:\n";
-        cout << "  Mudah  : " << suka_mudah << endl;
-        cout << "  Sedang : " << suka_sedang << endl;
-        cout << "  Sulit  : " << suka_sulit << endl << endl;
-
-        // Tentukan preferensi terkuat
-        string preferensi = "belum diketahui";
-        double max_suka = max({suka_mudah, suka_sedang, suka_sulit});
-
-        if (max_suka > 0) {
-            if (suka_mudah == max_suka) preferensi = "resep mudah";
-            else if (suka_sedang == max_suka) preferensi = "resep sedang";
-            else if (suka_sulit == max_suka) preferensi = "resep sulit";
-        }
-
-        cout << "AI memprediksi Anda lebih suka: " << preferensi << endl;
-    }
-
-    void demoAI() {
-        cout << "\nDEMO AI LEARNING:\n";
-        cout << "====================\n";
-        cout << "Simulasi: User suka resep mudah...\n";
-
-        // Simulasi suka resep mudah
-        for (int i = 0; i < daftar_resep.size(); i++) {
-            if (daftar_resep[i].kategori == "mudah") {
-                daftar_resep[i].skor_ai += 2;
-                suka_mudah += 2;
+        int terbaik = 0;
+        for (int i = 1; i < resep_list.size(); i++) {
+            if (resep_list[i].skor > resep_list[terbaik].skor) {
+                terbaik = i;
             }
         }
 
-        cout << "Simulasi: User tidak suka resep sulit...\n";
-
-        // Simulasi tidak suka resep sulit
-        for (int i = 0; i < daftar_resep.size(); i++) {
-            if (daftar_resep[i].kategori == "sulit") {
-                daftar_resep[i].skor_ai -= 1;
-                suka_sulit -= 1;
-            }
+        if (resep_list[terbaik].skor > 0) {
+            cout << "AI merekomendasikan: " << resep_list[terbaik].nama << endl;
+            cout << "Skor: " << resep_list[terbaik].skor << endl;
+        } else {
+            cout << "Belum ada rekomendasi. Beri nilai dulu!\n";
         }
-
-        cout << "Demo selesai! Lihat rekomendasi AI sekarang.\n";
     }
 
     void jalankan() {
         int pilihan;
 
-
-        cout << "    PROGRAM RESEP DENGAN AI LEARNING   \n";
-        cout << "           Versi Sederhana          \n";
-
+        cout << "=== PROGRAM RESEP AI ===\n";
 
         while (true) {
             cout << "\nMenu:\n";
             cout << "1. Lihat Resep\n";
             cout << "2. Tambah Resep\n";
-            cout << "3. Beri Penilaian (AI Learning)\n";
+            cout << "3. Beri Nilai\n";
             cout << "4. Rekomendasi AI\n";
-            cout << "5. Lihat Pembelajaran AI\n";
-            cout << "6. Demo AI\n";
-            cout << "7. Keluar\n";
+            cout << "5. Keluar\n";
             cout << "Pilih: ";
             cin >> pilihan;
 
-            switch (pilihan) {
-                case 1: lihatResep(); break;
-                case 2: tambahResep(); break;
-                case 3: beriPenilaian(); break;
-                case 4: rekomendasiAI(); break;
-                case 5: lihatPembelajaranAI(); break;
-                case 6: demoAI(); break;
-                case 7:
-                    cout << "Terima kasih! AI telah belajar dari Anda.\n";
-                    return;
-                default:
-                    cout << "Pilihan salah!\n";
+            if (pilihan == 1) {
+                tampilkanResep();
+            } else if (pilihan == 2) {
+                tambahResep();
+            } else if (pilihan == 3) {
+                beriNilai();
+            } else if (pilihan == 4) {
+                rekomendasiAI();
+            } else if (pilihan == 5) {
+                cout << "Sampai jumpa!\n";
+                break;
+            } else {
+                cout << "Pilihan salah!\n";
             }
         }
     }
