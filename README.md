@@ -1,22 +1,47 @@
-🍲 SISTEM REKOMENDASI RESEP MASAKAN INDONESIA
-Proyek ini merupakan implementasi sistem rekomendasi resep berbasis logika sederhana menggunakan bahasa pemrograman C++. Sistem ini membantu pengguna mendapatkan saran masakan khas Indonesia berdasarkan tingkat kesulitan memasak dan bahan utama yang dimiliki.
+🤖 PROGRAM RESEP AI SEDERHANA
+Program ini adalah implementasi sederhana sistem rekomendasi resep menggunakan AI Learning dasar dengan bahasa pemrograman C++. Sistem dapat belajar dari preferensi pengguna dan memberikan rekomendasi resep berdasarkan skor yang diberikan.
+Program menggunakan algoritma pembelajaran sederhana dimana AI akan mengingat resep mana yang disukai pengguna dan memberikan rekomendasi berdasarkan skor tertinggi.
+🛠️ Cara Menjalankan Program
 
-Data yang digunakan merupakan kumpulan resep fiktif dari berbagai kategori seperti nasi, ayam, ikan, sayuran, dan sapi, yang dikelompokkan dalam tiga tingkat kesulitan: mudah, sedang, dan sulit.
+Persiapan Compiler:
 
-🛠️ Cara Menjalankan Kode
-1. Buka software C++ seperti Code::Blocks, Visual Studio, atau compiler online (misalnya replit.com).
-2. Buat file baru dan salin seluruh isi dari file ai indonesia.cpp.
-3. Kompilasi dan jalankan program.
-4. Ikuti menu yang muncul di terminal:
-	A. Masukkan tingkat kesulitan (mudah/sedang/sulit)
-	B. Masukkan bahan utama (ayam/sapi/ikan/sayuran/nasi)
-5. Sistem akan menampilkan rekomendasi resep masakan Indonesia yang sesuai.
+1. Buka software C++ seperti Code::Blocks, Dev-C++, Visual Studio, atau compiler online
+Buat file baru dengan nama resep_ai.cpp
 
-✅ Fitur Utama
-1. Input tingkat kesulitan dan bahan utama dari pengguna.
-2. Rekomendasi resep berdasarkan 2 kriteria utama.
-3. Menampilkan detail resep yang direkomendasikan.
-4. Menu interaktif untuk:
-	A. Menampilkan semua resep berdasarkan tingkat kesulitan
-	B. Menampilkan resep berdasarkan jenis bahan
-5. Sistem berbasis struktur data dan pencarian sederhana (tanpa AI atau ML)
+2. Kompilasi dan Jalankan:
+bashg++ -o resep_ai resep_ai.cpp
+./resep_ai
+
+3. Menggunakan Program:
+	1. Pilih menu yang tersedia (1-5)
+	2. Ikuti instruksi di layar
+	4.Berikan penilaian untuk melatih AI
+
+
+
+✅ Fitur Program
+1. Lihat Resep
+
+Menampilkan semua resep yang tersedia
+Menunjukkan nama, bahan, dan skor setiap resep
+
+2. Tambah Resep
+
+Menambahkan resep baru ke dalam sistem
+Input nama resep dan bahan-bahan
+Skor dimulai dari 0
+
+3. Beri Nilai (AI Learning)
+
+Memberikan penilaian suka/tidak suka pada resep
+AI belajar dari preferensi pengguna
+Skor akan naik (+1) jika suka, turun (-1) jika tidak suka
+
+4. Rekomendasi AI
+
+AI memberikan rekomendasi berdasarkan skor tertinggi
+Menampilkan resep dengan rating terbaik
+
+5. Keluar Program
+
+Menutup aplikasi dengan pesan perpisahan
